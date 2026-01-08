@@ -1,0 +1,64 @@
+services:
+  # --- Service Base de Données ---
+  db:
+    image: mysql:8.0
+    container_name: eco_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: eco_database
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  # --- Service Backend ---
+  backend:
+    build: ./backend
+    container_name: eco_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - backend_uploads:/usr/src/app/uploads
+    environment:
+      - PORT=5000
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=eco_database
+      - JWT_SECRET=super_secret_jwt_key
+      # IMPORTANT : Le frontend tourne maintenant sur le port 5173
+      - CORS_ORIGIN=http://localhost:5173
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # --- Service Frontend ---
+  # frontend:
+  #   build: ./frontend
+  #   container_name: eco_frontend
+  #   restart: always
+  #   ports:
+  #     - "5173:5173" # Nouveau port standard Vite
+  #   environment:
+  #     - VITE_API_URL=http://localhost:5000/api # Vite utilise le préfixe VITE_
+  #   depends_on:
+  #     - backend
+  #   volumes:
+  #     - ./frontend:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   networks:
+  #     - app-network
+
+volumes:
+  db_data:
+  backend_uploads:
+
+networks:
+  app-network:
+    driver: bridge

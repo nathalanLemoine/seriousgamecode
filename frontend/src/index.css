@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- AJOUT POUR LE FORMAT SMARTPHONE --- */
+
+/* On force la page à prendre toute la hauteur et on centre le contenu */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #e5e7eb; /* Un fond gris clair pour faire ressortir le téléphone */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Empêche le scroll sur la page principale */
+}
+
+/* Le conteneur principal de React doit aussi être centré */
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px; /* Un petit espace autour pour que ça ne colle pas aux bords sur petit écran */
+}
