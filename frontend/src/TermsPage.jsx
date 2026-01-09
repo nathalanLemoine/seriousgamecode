@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, FileText } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // <--- AJOUT DE Link ICI
 
 export default function TermsPage() {
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ export default function TermsPage() {
         <h1 className="text-xl font-bold text-gray-900">Conditions Générales</h1>
       </div>
 
-      {/* Contenu du contrat */}
       <div className="space-y-6 text-sm text-gray-600 leading-relaxed">
         
         <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
@@ -30,36 +29,44 @@ export default function TermsPage() {
         <section>
           <h2 className="text-gray-900 font-bold mb-2">1. Objet</h2>
           <p>
-            Les présentes CGU ont pour objet de définir les modalités de mise à disposition des services de l'application FreshConnect, permettant de sauver des paniers anti-gaspi.
+            Les présentes CGU ont pour objet de définir les modalités de mise à disposition des services de l'application FreshConnect.
           </p>
         </section>
 
         <section>
           <h2 className="text-gray-900 font-bold mb-2">2. Services</h2>
           <p>
-            L'application met en relation des utilisateurs et des commerçants. Nous ne garantissons pas la disponibilité spécifique des produits dans les paniers surprises, c'est le jeu !
+            L'application met en relation des utilisateurs et des commerçants. Nous ne garantissons pas la disponibilité spécifique des produits.
           </p>
         </section>
 
         <section>
           <h2 className="text-gray-900 font-bold mb-2">3. Responsabilité</h2>
           <p>
-            L'utilisateur s'engage à récupérer sa commande dans les horaires indiqués. En cas d'oubli, le panier sera perdu et non remboursé.
+            L'utilisateur s'engage à récupérer sa commande dans les horaires indiqués.
           </p>
         </section>
 
-        {/* --- LA FAMEUSE CLAUSE PAILLETTE --- */}
+        {/* --- CORRECTION ICI : UTILISATION DE <Link> --- */}
         <section className="bg-pink-50 p-4 rounded-xl border border-pink-100">
           <h2 className="text-pink-900 font-bold mb-2">4. Clause Spéciale</h2>
           <p>
-            En acceptant ces conditions, l'utilisateur reconnaît qu'il est strictement interdit d'utiliser la fonction <a href="#" className="text-pink-600 font-bold underline decoration-wavy">Paillette</a> sans une autorisation spéciale de l'administration. Tout usage abusif entraînera une pluie de confettis virtuels non désirable.
+            En acceptant ces conditions, l'utilisateur reconnaît qu'il est strictement interdit d'utiliser la fonction{' '}
+            {/* Le composant Link gère la navigation sans recharger la page */}
+            <Link 
+                to="/paillettes"
+                className="text-pink-600 font-bold underline decoration-wavy cursor-pointer hover:text-pink-800 transition-colors"
+            >
+                Paillette
+            </Link>{' '}
+            sans une autorisation spéciale de l'administration. Tout usage abusif entraînera une pluie de confettis virtuels non désirable.
           </p>
         </section>
 
         <section>
           <h2 className="text-gray-900 font-bold mb-2">5. Données personnelles</h2>
           <p>
-            Vos données sont précieuses. Nous les utilisons uniquement pour le bon fonctionnement du service et ne les revendons pas à des tiers malveillants.
+            Vos données sont précieuses. Nous les utilisons uniquement pour le bon fonctionnement du service.
           </p>
         </section>
         

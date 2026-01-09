@@ -10,7 +10,6 @@ export default function PanierDetailPage() {
   const [loading, setLoading] = useState(true);
   const [showPayModal, setShowPayModal] = useState(false);
 
-  // Charger les détails du panier
   useEffect(() => {
     const fetchDetails = async () => {
       const token = localStorage.getItem('token');
@@ -31,14 +30,12 @@ export default function PanierDetailPage() {
     fetchDetails();
   }, [id]);
 
-  // Helper pour l'image
   const getImageUrl = (path) => {
     if (!path) return 'https://placehold.co/400x200/e2e8f0/gray?text=No+Image';
     if (path.startsWith('http')) return path;
     return `http://localhost:5000${path}`;
   };
 
-  // Gestion du Paiement
   const handlePayment = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -66,25 +63,20 @@ export default function PanierDetailPage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center text-primary"><Loader className="animate-spin" /></div>;
   if (!panier) return <div className="min-h-screen flex items-center justify-center text-gray-500">Panier introuvable</div>;
 
-  // --- CALCUL DU PRIX CORRIGÉ ---
   let realOriginalPrice;
 
-  // 1. Priorité : Si on a des items, on calcule la vraie somme (Prix * Quantité)
   if (panier.items && panier.items.length > 0) {
       realOriginalPrice = panier.items.reduce((total, item) => {
           return total + (parseFloat(item.original_price) * item.quantity);
       }, 0);
   } 
-  // 2. Sinon, on essaie de prendre la valeur envoyée par le backend
   else if (panier.valeur_totale) {
       realOriginalPrice = parseFloat(panier.valeur_totale);
   }
-  // 3. Dernier recours (panier vide sans info) : prix fictif +30%
   else {
       realOriginalPrice = panier.prix_vente * 1.3;
   }
 
-  // Sécurité d'affichage : si le prix calculé est inférieur au prix de vente (erreur de saisie), on remet le fictif
   if (realOriginalPrice <= panier.prix_vente) {
       realOriginalPrice = panier.prix_vente * 1.3;
   }

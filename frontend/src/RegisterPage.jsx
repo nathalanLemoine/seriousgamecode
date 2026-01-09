@@ -5,22 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function RegisterPage() {
   const navigate = useNavigate();
   
-  // États du formulaire
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  // États pour la gestion UI (chargement et erreurs)
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // On efface les erreurs précédentes
-
-    // 1. Validation locale
+    setError('');
     if (!termsAccepted) {
       setError("Tu dois accepter les conditions générales !");
       return;
@@ -29,17 +25,14 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // 2. Préparation des données pour le backend
-      // Attention : on mappe firstName -> prenom et lastName -> nom
       const userData = {
         email: email,
         password: password,
         prenom: firstName, 
         nom: lastName,
-        role: 'student' // Rôle par défaut
+        role: 'student'
       };
 
-      // 3. Appel au Backend
       const response = await fetch('http://localhost:5000/api/users/register', {
         method: 'POST',
         headers: {
@@ -50,19 +43,14 @@ export default function RegisterPage() {
 
       const data = await response.json();
 
-      // 4. Gestion de la réponse
       if (!response.ok) {
-        // Si erreur (ex: 400 - Email déjà pris), on affiche le message du back
         throw new Error(data.message || "Une erreur est survenue");
       }
 
-      // 5. Succès ! (Code 201)
       console.log("Inscription réussie :", data);
       
-      // On sauvegarde le token pour que l'utilisateur soit considéré comme connecté
       localStorage.setItem('token', data.token);
       
-      // On peut aussi sauvegarder les infos user si besoin
       localStorage.setItem('user', JSON.stringify({ 
         id: data.id, 
         email: data.email, 
@@ -71,7 +59,6 @@ export default function RegisterPage() {
         nom: lastName
       }));
 
-      // Redirection vers le profil (ou l'accueil)
       navigate('/profile');
 
     } catch (err) {

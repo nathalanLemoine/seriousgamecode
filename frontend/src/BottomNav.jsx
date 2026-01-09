@@ -1,11 +1,11 @@
 import React from 'react';
-import { Home, Receipt, User } from 'lucide-react'; // Import de Receipt (Ticket)
+import { Home, Receipt, User } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 export default function BottomNav() {
   const navItems = [
     { icon: Home, label: "Accueil", path: "/home" },
-    { icon: Receipt, label: "Commandes", path: "/orders" }, // Nouvelle page
+    { icon: Receipt, label: "Commandes", path: "/orders" },
     { icon: User, label: "Profil", path: "/profile" },
   ];
 

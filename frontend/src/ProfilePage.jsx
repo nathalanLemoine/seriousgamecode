@@ -89,18 +89,10 @@ export default function ProfilePage() {
       default: return status;
     }
   };
-
-  // --- CALCUL EXACT DES ÉCONOMIES ---
-  // On utilise 'valeur_originale_totale' calculée par le Backend (Somme des produits)
-  // Moins le 'prix_vente' (ce que l'utilisateur a payé)
+  
   const totalSavings = orders.reduce((acc, order) => {
-      // Sécurité : on s'assure d'avoir des nombres
       const originalValue = parseFloat(order.valeur_originale_totale) || 0;
       const paidPrice = parseFloat(order.prix_vente) || 0;
-      
-      // Si jamais la valeur originale est 0 (ex: vieux panier sans produits listés),
-      // on ne compte pas d'économie négative, on met 0 ou une estimation fallback.
-      // Ici on reste strict : si pas de produits listés = 0 économie affichée.
       const saving = originalValue - paidPrice;
 
       return acc + (saving > 0 ? saving : 0);
@@ -188,7 +180,6 @@ export default function ProfilePage() {
         ) : (
             <div className="space-y-3 pb-4">
                 {orders.map((order) => {
-                    // Calcul individuel pour affichage (optionnel, mais sympa pour debugger)
                     const originalVal = parseFloat(order.valeur_originale_totale) || 0;
                     const paid = parseFloat(order.prix_vente) || 0;
                     const saved = originalVal - paid;

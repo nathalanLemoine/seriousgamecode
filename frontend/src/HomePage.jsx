@@ -18,16 +18,13 @@ export default function HomePage() {
   const fetchPaniersComplets = async () => {
     const token = localStorage.getItem('token');
     try {
-      // 1. On récupère la liste simple
       const res = await fetch('http://localhost:5000/api/paniers', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const basicData = await res.json();
       
-      // 2. On récupère les détails pour chaque panier
       const detailedPaniers = await Promise.all(
         basicData.map(async (panier) => {
-            // Génération CO2 aléatoire stable
             const randomCO2 = (1.8 + Math.random() * 1.4).toFixed(1);
 
             try {
@@ -37,10 +34,8 @@ export default function HomePage() {
                 
                 if (detailRes.ok) {
                     const detailData = await detailRes.json();
-                    // On retourne le détail complet (qui contient .items) + le CO2
                     return { ...detailData, co2Val: randomCO2 };
                 }
-                // Si échec du détail, on rend le panier de base + CO2
                 return { ...panier, co2Val: randomCO2 };
             } catch (err) {
                 console.error(`Erreur détail panier ${panier.id}`, err);
@@ -49,10 +44,9 @@ export default function HomePage() {
         })
       );
 
-      // 3. Tri
       const sortedData = detailedPaniers.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
       
-      console.log("Paniers chargés avec détails :", sortedData); // VÉRIFIE ICI DANS LA CONSOLE F12
+      console.log("Paniers chargés avec détails :", sortedData);
       setPaniers(sortedData);
     } catch (error) {
       console.error("Erreur fetch paniers:", error);
@@ -124,17 +118,14 @@ export default function HomePage() {
                 </div>
             ) : filteredPaniers.map((panier) => {
                 
-                // --- CALCUL DU PRIX ROBUSTE ---
                 const sellingPrice = parseFloat(panier.prix_vente);
                 let realOriginalPrice = 0;
 
-                // 1. Priorité aux items (Calcul précis)
                 if (panier.items && Array.isArray(panier.items) && panier.items.length > 0) {
                     realOriginalPrice = panier.items.reduce((total, item) => {
                         return total + (parseFloat(item.original_price) * (item.quantity || 1));
                     }, 0);
                 } 
-                // 2. Sinon valeur backend
                 else if (panier.valeur_totale) {
                     realOriginalPrice = parseFloat(panier.valeur_totale);
                 }

@@ -8,7 +8,8 @@ import TermsPage from './TermsPage';
 import ProfilePage from './ProfilePage';
 import HomePage from './HomePage';
 import OrdersPage from './OrdersPage';
-import PanierDetailPage from './PanierDetailPage'; // Import de la page détail
+import PanierDetailPage from './PanierDetailPage';
+import PaillettePage from './PaillettePage';
 
 // Import de la barre de navigation
 import BottomNav from './BottomNav';
@@ -76,7 +77,7 @@ function App() {
             
             {/* Page Détail Panier (Sans menu du bas grâce au Layout) */}
             <Route path="/panier/:id" element={<PanierDetailPage />} />
-
+            <Route path="/paillettes" element={<PaillettePage />} />
           </Routes>
         </Layout>
       </BrowserRouter>

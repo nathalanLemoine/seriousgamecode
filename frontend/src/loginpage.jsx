@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  // États
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,11 +12,10 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // On efface les erreurs précédentes
+    setError('');
     setIsLoading(true);
 
     try {
-      // 1. Appel au Backend
       const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
@@ -28,21 +26,17 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      // 2. Vérification de l'erreur
       if (!response.ok) {
         throw new Error(data.message || "Email ou mot de passe incorrect");
       }
 
-      // 3. Succès : On stocke le token
       console.log("Connexion réussie :", data);
       localStorage.setItem('token', data.token);
       
-      // Si le backend renvoie aussi les infos user, on les stocke
       if (data.user) {
         localStorage.setItem('user', JSON.stringify(data.user));
       }
 
-      // 4. Redirection vers le profil
       navigate('/profile');
 
     } catch (err) {

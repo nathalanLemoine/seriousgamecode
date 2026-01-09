@@ -19,7 +19,6 @@ export default function OrdersPage() {
     }
 
     try {
-      // On utilise ton endpoint existant
       const res = await fetch('http://localhost:5000/api/orders/myorders', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -35,7 +34,6 @@ export default function OrdersPage() {
     }
   };
 
-  // Helpers pour l'affichage
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {
       day: 'numeric', month: 'long', hour: '2-digit', minute:'2-digit'
