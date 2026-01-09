@@ -3,13 +3,38 @@
 
 Une application web de lutte contre le gaspillage alimentaire connectant magasins et consommateurs autour de paniers surprises à prix réduits.
 
-## 🎯 Concept
+## 🚀 Installation & Démarrage
 
-**FreshConnect** est un "Serious Game" écologique qui :
-- Connecte les magasins **HyperFresh** aux consommateurs
-- Propose des paniers surprises pour écouler les stocks
-- Calcule l'impact écologique réel (économies € et CO2 évité)
-- Gamifie la réduction des déchets alimentaires
+### Prérequis
+- Docker Desktop (dernière version)
+- Node.js v18+ 
+- Git
+
+### Étape 1 : Cloner le projet
+```bash
+git clone https://github.com/username/hyperfresh-mvp.git
+cd hyperfresh-mvp
+```
+
+### Étape 2 : Lancer Backend + Base de données
+```bash
+docker-compose up --build
+```
+
+⏳ **Attendre le message** : `Connected to database`
+
+Les services seront accessibles à :
+- **API Backend** : `http://localhost:5000`
+- **MySQL** : `localhost:3307`
+
+### Étape 3 : Lancer le Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Accéder à : **`http://localhost:5173`**
 
 ## 🏗️ Architecture Technique
 
@@ -72,39 +97,6 @@ hyperfresh-mvp/
 - ✅ **Dashboard profil** : Jauge d'impact écologique personnalisée
 - ✅ **Paiement simulé** : Apple Pay / Google Pay
 - 🎉 **Easter Egg** : Clause "Paillettes" cachée dans les CGU (animation)
-
-## 🚀 Installation & Démarrage
-
-### Prérequis
-- Docker Desktop (dernière version)
-- Node.js v18+ 
-- Git
-
-### Étape 1 : Cloner le projet
-```bash
-git clone https://github.com/username/hyperfresh-mvp.git
-cd hyperfresh-mvp
-```
-
-### Étape 2 : Lancer Backend + Base de données
-```bash
-docker-compose up --build
-```
-
-⏳ **Attendre le message** : `Connected to database`
-
-Les services seront accessibles à :
-- **API Backend** : `http://localhost:5000`
-- **MySQL** : `localhost:3307`
-
-### Étape 3 : Lancer le Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Accéder à : **`http://localhost:5173`**
 
 ## 🔧 Dépannage
 
