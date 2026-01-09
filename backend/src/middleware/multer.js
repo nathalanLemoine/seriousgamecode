@@ -5,7 +5,7 @@ const fs = require('fs');
 // 1. Définir le chemin ABSOLU vers le dossier uploads
 // On remonte d'un cran (..) si ce fichier est dans un dossier 'middleware' ou 'routes'
 // Ajuste le nombre de '../' selon où se trouve ce fichier par rapport à la racine !
-const uploadDir = path.join(__dirname, '../uploads'); 
+const uploadDir = path.join(__dirname, '../../uploads'); 
 
 // 2. Vérifier que le dossier existe, sinon le créer (Sécurité)
 if (!fs.existsSync(uploadDir)){
